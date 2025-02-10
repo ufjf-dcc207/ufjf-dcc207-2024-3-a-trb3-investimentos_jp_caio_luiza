@@ -43,27 +43,36 @@ export default function Calculadora() {
         <>
             <div className='calculadora'>
                 <h1>Calculadora de investimentos</h1>
-                <dl>
-                    <dd>Investimento Inicial</dd>
-                    <dl>
-                        <input type="number" value={investimentoInicial} onChange={(evento)=>{setInvestimentoInicial(evento.target.valueAsNumber)}} />
-                    </dl>
-                    <dd>Investimento Mensal</dd>
-                    <dl>
-                        <input type="number" value={investimentoMensal} onChange={(evento)=>{setInvestimentoMensal(evento.target.valueAsNumber)}} />
-                    </dl>
-                    <dd>Período em meses</dd>
-                    <dl>
-                        <input type="number" value={periodoMeses} onChange={(evento)=>{setPeriodoAnos(evento.target.valueAsNumber)}} />
-                    </dl>
-                    <dd>Rendimento anual</dd>
-                    <dl>
-                        <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
-                    </dl>
-                </dl>
-                <button onClick={calcularTotal} >Calcular</button>
-                <div>
-                    <h3>Valor Final Acumulado</h3>
+                <div className='formulario'>
+                    <div className='linha1'>
+                        <h3>Investimento Inicial</h3>
+                        <div className='div-input'>
+                            <span>R$</span>
+                            <input type="number" value={investimentoInicial} onChange={(evento)=>{setInvestimentoInicial(evento.target.valueAsNumber)}} />
+                        </div>
+                        <h3>Período</h3>
+                        <div className='div-input'>
+                            <input type="number" value={periodoMeses} onChange={(evento)=>{setPeriodoAnos(evento.target.valueAsNumber)}} />
+                        </div>
+                    </div>
+                    <div className='linha2'>
+                    <h3>Investimento Mensal</h3>
+                        <div className='div-input'>
+                            <span>R$</span>
+                            <input type="number" value={investimentoMensal} onChange={(evento)=>{setInvestimentoMensal(evento.target.valueAsNumber)}} />
+                        </div>
+                        <h3>Rendimento anual</h3>
+                        <div className='div-input'>
+                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <span>%</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='div-botao'>
+                    <button onClick={calcularTotal} className='botao' >Calcular</button>
+                </div>
+                <div className='resuldado'>
+                    <h3 className='valor-final'>Valor Final Acumulado</h3>
                     <span>R${valorTotal.toFixed(2)}</span>
                 </div>
             </div>
