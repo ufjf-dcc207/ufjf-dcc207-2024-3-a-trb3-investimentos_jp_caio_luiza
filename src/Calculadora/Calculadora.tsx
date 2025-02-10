@@ -6,18 +6,38 @@ export default function Calculadora() {
 
     const [investimentoInicial, setInvestimentoInicial] = useState(0);
     const [investimentoMensal, setInvestimentoMensal] = useState(0);
-    const [periodoAnos, setPeriodoAnos] = useState(0);
+    const [periodoMeses, setPeriodoAnos] = useState(0);
     const [rendimentoAnual, setRendimentoAnual] = useState(0);
+    const [valorInvestido, setValorInvestido] = useState(0);
     const [valorTotal, setValorTotal] = useState(0);
+
+    const imposto = 0.1;
     
     function calcularTotal() {
 
-        const i = rendimentoAnual / 100;
+        // i = taxa de juros mensal
+        const i = Math.pow( 1 + (rendimentoAnual / 100.00), 1/12) - 1;
 
-        const resultado = investimentoInicial * Math.pow(1 + i, periodoAnos) + investimentoMensal * (Math.pow(1 + i, periodoAnos) / i );
+        // facilita organizacao formula
+        const t = periodoMeses;
 
-        setValorTotal(resultado);
+        // calcula o montante do dinheiro no fim do período sem imposto
+        const totalSemImposto = (investimentoInicial * Math.pow(1 + i, t)) + investimentoMensal * ((Math.pow(1 + i, t) - 1) / i );
+
+        // soma o valor do aporte inicial com o valor aportado mensalmente
+        const valorAportado = (investimentoInicial + (investimentoMensal * t));
+
+        // calcula quanto de fato a aplicação rendeu
+        const rendimento = totalSemImposto - valorAportado;
+
+        // calcula o total do dinheiro com impostos descontados
+        const total = totalSemImposto - (rendimento * imposto);
+        
+        setValorTotal(total);
+
+        setValorInvestido(valorAportado);
     }
+
 
     return (
         <>
@@ -32,9 +52,9 @@ export default function Calculadora() {
                     <dl>
                         <input type="number" value={investimentoMensal} onChange={(evento)=>{setInvestimentoMensal(evento.target.valueAsNumber)}} />
                     </dl>
-                    <dd>Período em anos</dd>
+                    <dd>Período em meses</dd>
                     <dl>
-                        <input type="number" value={periodoAnos} onChange={(evento)=>{setPeriodoAnos(evento.target.valueAsNumber)}} />
+                        <input type="number" value={periodoMeses} onChange={(evento)=>{setPeriodoAnos(evento.target.valueAsNumber)}} />
                     </dl>
                     <dd>Rendimento anual</dd>
                     <dl>
@@ -42,6 +62,10 @@ export default function Calculadora() {
                     </dl>
                 </dl>
                 <button onClick={calcularTotal} >Calcular</button>
+                <div>
+                    <h3>Valor Final Acumulado</h3>
+                    <span>R${valorTotal.toFixed(2)}</span>
+                </div>
             </div>
         </>
     )
