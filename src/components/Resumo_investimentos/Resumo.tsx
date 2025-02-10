@@ -1,13 +1,12 @@
-//import { CalculadoraProps } from "./Calculadora";
 import "./Resumo.css";
 
-interface CalculadoraProps {
+interface ResumoProps {
     valorTotal: number;
     valorInvestido: number;
     valorImposto: number;
 }
 
-export default function Resumo({ valorTotal, valorInvestido, valorImposto }: CalculadoraProps) {
+export default function Resumo({ valorTotal, valorInvestido, valorImposto }: ResumoProps) {
     return (
         <div className="resumo">
             <table className="tabela">
