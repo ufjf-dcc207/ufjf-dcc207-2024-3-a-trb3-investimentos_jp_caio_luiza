@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Calculadora.css'
+import Resumo from '../Resumo_investimentos/Resumo';
 
 
 export default function Calculadora() {
@@ -9,7 +10,8 @@ export default function Calculadora() {
     const [periodoMeses, setPeriodoAnos] = useState(0);
     const [rendimentoAnual, setRendimentoAnual] = useState(0);
     const [valorInvestido, setValorInvestido] = useState(0);
-    const [valorTotal, setValorTotal] = useState(0);
+    const [valorTotalSemImposto, setValorTotalSemImposto] = useState(0);
+    const [valorTotalPosImposto, setValorTotalPosImposto] = useState(0);
 
     const imposto = 0.1;
     
@@ -31,16 +33,18 @@ export default function Calculadora() {
         const rendimento = totalSemImposto - valorAportado;
 
         // calcula o total do dinheiro com impostos descontados
-        const total = totalSemImposto - (rendimento * imposto);
+        const totalComImposto = totalSemImposto - (rendimento * imposto);
+
+        setValorTotalSemImposto(totalSemImposto);
         
-        setValorTotal(total);
+        setValorTotalPosImposto(totalComImposto);
 
         setValorInvestido(valorAportado);
     }
 
 
     return (
-        <>
+        <div className='pagina'>
             <div className='calculadora'>
                 <h1>Calculadora de investimentos</h1>
                 <div className='formulario'>
@@ -71,11 +75,12 @@ export default function Calculadora() {
                 <div className='div-botao'>
                     <button onClick={calcularTotal} className='botao' >Calcular</button>
                 </div>
-                <div className='resuldado'>
-                    <h3 className='valor-final'>Valor Final Acumulado</h3>
-                    <span>R${valorTotal.toFixed(2)}</span>
+                <div className='resultado'>
+                    <h3 className='valor-final'>Valor Final</h3>
+                    <span>R${valorTotalPosImposto.toFixed(2)}</span>
                 </div>
             </div>
-        </>
+            <Resumo valorInvestido={valorInvestido} valorTotal={valorTotalSemImposto} valorImposto={imposto}/>
+        </div>
     )
 }
