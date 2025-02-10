@@ -1,12 +1,13 @@
 .resumo {
-    width: 100vh;
-    display: flex;
+    width: 100vw;
+    display: grid;
     justify-content: center;
-    margin-top: 20px;
+    margin: 35px;
+    margin-bottom: 100px;
 }
 
 .tabela {
-    width: 100%;
+    width: 60vw;
     border-collapse: separate;
     background-color: #E1E5F2;
     border-radius: 10px;
