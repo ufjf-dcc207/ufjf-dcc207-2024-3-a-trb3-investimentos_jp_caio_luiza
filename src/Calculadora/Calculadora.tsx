@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+import './Calculadora.css'
 
 
 export default function Calculadora() {
@@ -12,14 +12,17 @@ export default function Calculadora() {
     
     function calcularTotal() {
 
-        
+        const i = rendimentoAnual / 100;
+
+        const resultado = investimentoInicial * Math.pow(1 + i, periodoAnos) + investimentoMensal * (Math.pow(1 + i, periodoAnos) / i );
+
+        setValorTotal(resultado);
     }
 
     return (
         <>
             <div className='calculadora'>
                 <h1>Calculadora de investimentos</h1>
-                div
                 <dl>
                     <dd>Investimento Inicial</dd>
                     <dl>
