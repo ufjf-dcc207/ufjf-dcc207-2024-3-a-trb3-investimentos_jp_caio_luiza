@@ -1,4 +1,4 @@
-import Calculadora from './Calculadora/Calculadora';
+import Calculadora from './components/Calculadora/Calculadora';
 import Footer from './components/Footer'
 import Navbar from './components/Navbar';
 
