@@ -1,11 +1,9 @@
-import './App.css'
+import Footer from './components/Footer'
 
 export default function App() {
-
   return (
-    <>
-    <div>hello world!</div>
-    </>
-  )
+    <div className="app"> 
+      <Footer />
+    </div>
+  );
 }
-
