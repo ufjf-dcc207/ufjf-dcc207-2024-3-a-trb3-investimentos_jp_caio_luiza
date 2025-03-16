@@ -1,0 +1,36 @@
+.resumo {
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.tabela {
+    width: 60vw;
+    border-collapse: separate;
+    background-color: #E1E5F2;
+    border-radius: 10px;
+    border: 2px solid #001F54;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.titulo {
+    text-align: left;
+    font-size: 35px;
+    color: #0A1128;
+}
+
+td {
+    padding: 7px;
+    text-align: left;
+}
+
+.direita {
+    text-align: right;
+    font-weight: bold;
+}
+.total{
+    color:#001F54;
+    background-color: #c7d1f1;
+}

@@ -1,0 +1,95 @@
+
+.pagina {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculadora {
+    width: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 80px;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    margin-bottom: 50px;
+    font-size: 50px;
+}
+
+.formulario {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.linha1 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.linha2 {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+h3 {
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+}
+
+.div-input {
+    border: 2px solid #001F54;
+    border-radius: 10px;
+    background-color: #E1E5F2;
+    padding: 10px;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    width: 300px;
+    height: 30px;
+    border: none;
+    outline: none;
+    padding-left: 10px;
+    background-color: #E1E5F2;
+    font-size: 20px;
+    color: #001F54;
+}
+
+.div-botao {
+    display: flex;
+    max-width: 700px;
+    width: 100%;
+    justify-content: end;
+}
+
+.botao {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    background-color: #001F54;
+    color: white;
+    width: 180px;
+}
+
+.valor-final {
+    font-size: 35px;
+}
+
+.resultado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
