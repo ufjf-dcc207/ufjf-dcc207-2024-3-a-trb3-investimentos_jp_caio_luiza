@@ -107,6 +107,18 @@ export default function Calculadora() {
           });
     }
     
+    function calculaLciLca() {
+
+        const taxaReal = cdi.current * (rentabilidadeCdb / 100);
+
+        const total = calcularTotal(taxaReal, 0);
+
+        setLciLca({
+            valorInvestido: total.totalAportado,
+            valorTotalSemImposto: total.semImposto,
+            valorTotalPosImposto: total.comImposto
+          });
+    }
 
     return (
         <div className='pagina'>
