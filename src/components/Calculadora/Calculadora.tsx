@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
+import { getSelic } from '../../services/getSelic';
 
 
 export default function Calculadora() {
@@ -40,6 +41,8 @@ export default function Calculadora() {
         setValorTotalPosImposto(totalComImposto);
 
         setValorInvestido(valorAportado);
+
+        getSelic("15/03/2025");
     }
 
 
