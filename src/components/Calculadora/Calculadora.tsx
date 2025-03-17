@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
 import { getSelic } from '../../services/getSelic';
@@ -7,6 +7,10 @@ import { getIpca } from '../../services/getIpca';
 
 
 export default function Calculadora() {
+
+    const selic = useRef(0);
+    const cdi = useRef(0);
+    const ipca = useRef(0);
 
     const [investimentoInicial, setInvestimentoInicial] = useState(0);
     const [investimentoMensal, setInvestimentoMensal] = useState(0);
@@ -61,7 +65,18 @@ export default function Calculadora() {
         
         return `${dia}/${mes}/${ano}`;
     }
-    
+
+    useEffect(() => {
+        const dataAtual = getDataAtualFormatada();
+
+        async function buscarTaxas() {
+            selic.current = await getSelic(dataAtual);
+            cdi.current = await getCdi(dataAtual);
+            ipca.current = await getIpca(dataAtual);
+        }
+
+        buscarTaxas();
+    }, []);
     
 
     return (
