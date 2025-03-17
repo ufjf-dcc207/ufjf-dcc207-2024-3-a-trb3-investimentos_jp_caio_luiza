@@ -152,6 +152,25 @@ export default function Calculadora() {
         calculaLciLca();
         calculaFundoDI();
         calculaTesouroIpca();
+
+        //teste
+        const investimentos =[
+            { tipo: "CDB", valorInvestido: cdb.valorInvestido, valorTotal: cdb.valorTotalSemImposto, valorImposto: cdb.valorTotalSemImposto - cdb.valorTotalPosImposto },
+            { tipo: "Tesouro Selic", valorInvestido: tesouroSelic.valorInvestido, valorTotal: tesouroSelic.valorTotalSemImposto, valorImposto: tesouroSelic.valorTotalSemImposto - tesouroSelic.valorTotalPosImposto },
+            { tipo: "LCI/LCA", valorInvestido: lciLca.valorInvestido, valorTotal: lciLca.valorTotalSemImposto, valorImposto: lciLca.valorTotalSemImposto - lciLca.valorTotalPosImposto },
+            { tipo: "Fundo DI", valorInvestido: fundoDi.valorInvestido, valorTotal: fundoDi.valorTotalSemImposto, valorImposto: fundoDi.valorTotalSemImposto - fundoDi.valorTotalPosImposto },
+            { tipo: "Tesouro IPCA", valorInvestido: tesouroIpca.valorInvestido, valorTotal: tesouroIpca.valorTotalSemImposto, valorImposto: tesouroIpca.valorTotalSemImposto - tesouroIpca.valorTotalPosImposto }
+        ];
+        console.log("Detalhes dos Investimentos:");
+        investimentos.forEach((investimento, index) => {
+        console.log(`Investimento ${index + 1}:`);
+        console.log(`Tipo: ${investimento.tipo}`);
+        console.log(`Valor Investido: ${investimento.valorInvestido}`);
+        console.log(`Valor Total: ${investimento.valorTotal}`);
+        console.log(`Valor Imposto: ${investimento.valorImposto}`);
+        console.log("----------------------");
+});
+
     }
 
     return (
