@@ -3,6 +3,7 @@ import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
 import { getSelic } from '../../services/getSelic';
 import { getCdi } from '../../services/getCdi';
+import { getIpca } from '../../services/getIpca';
 
 
 export default function Calculadora() {
@@ -44,6 +45,8 @@ export default function Calculadora() {
         setValorInvestido(valorAportado);
 
         getCdi("13/03/2025");
+        getSelic("18/03/2025");
+        getIpca("18/03/2025");
     }
 
 
