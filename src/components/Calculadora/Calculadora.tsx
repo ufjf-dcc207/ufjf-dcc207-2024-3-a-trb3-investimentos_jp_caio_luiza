@@ -11,7 +11,11 @@ export default function Calculadora() {
     const [investimentoInicial, setInvestimentoInicial] = useState(0);
     const [investimentoMensal, setInvestimentoMensal] = useState(0);
     const [periodoMeses, setPeriodoAnos] = useState(0);
-    const [rendimentoAnual, setRendimentoAnual] = useState(0);
+    const [rentabilidadeCdb, setRentabilidadeCdb] = useState(0);
+    const [rentabilidadeFundoDi, setRentabilidadeFundoDi] = useState(0);
+    const [rentabilidadeTesouroSelic, setRentabilidadeTesouroSelic] = useState(0);
+    const [rentabilidadeLciLca, setRentabilidadeLciLca] = useState(0);
+    const [juroRealIpca, setJuroRealIpca] = useState(0);
     const [valorInvestido, setValorInvestido] = useState(0);
     const [valorTotalSemImposto, setValorTotalSemImposto] = useState(0);
     const [valorTotalPosImposto, setValorTotalPosImposto] = useState(0);
@@ -21,28 +25,28 @@ export default function Calculadora() {
     function calcularTotal() {
 
         // i = taxa de juros mensal
-        const i = Math.pow( 1 + (rendimentoAnual / 100.00), 1/12) - 1;
+        // const i = Math.pow( 1 + (rendimentoAnual / 100.00), 1/12) - 1;
 
         // facilita organizacao formula
-        const t = periodoMeses;
+        // const t = periodoMeses;
 
         // calcula o montante do dinheiro no fim do período sem imposto
-        const totalSemImposto = (investimentoInicial * Math.pow(1 + i, t)) + investimentoMensal * ((Math.pow(1 + i, t) - 1) / i );
+        // const totalSemImposto = (investimentoInicial * Math.pow(1 + i, t)) + investimentoMensal * ((Math.pow(1 + i, t) - 1) / i );
 
         // soma o valor do aporte inicial com o valor aportado mensalmente
-        const valorAportado = (investimentoInicial + (investimentoMensal * t));
+        // const valorAportado = (investimentoInicial + (investimentoMensal * t));
 
         // calcula quanto de fato a aplicação rendeu
-        const rendimento = totalSemImposto - valorAportado;
+        // const rendimento = totalSemImposto - valorAportado;
 
         // calcula o total do dinheiro com impostos descontados
-        const totalComImposto = totalSemImposto - (rendimento * imposto);
+        // const totalComImposto = totalSemImposto - (rendimento * imposto);
 
-        setValorTotalSemImposto(totalSemImposto);
+        // setValorTotalSemImposto(totalSemImposto);
         
-        setValorTotalPosImposto(totalComImposto);
+        // setValorTotalPosImposto(totalComImposto);
 
-        setValorInvestido(valorAportado);
+        // setValorInvestido(valorAportado);
 
         getCdi("13/03/2025");
         getSelic("18/03/2025");
@@ -67,12 +71,12 @@ export default function Calculadora() {
                         </div>
                         <h3>Juro real do Tesouro IPCA</h3>
                         <div className='div-input'>
-                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <input type="number" value={juroRealIpca} onChange={(evento)=>{setJuroRealIpca(evento.target.valueAsNumber)}} />
                             <span>%</span>
                         </div>
                         <h3>Rentabilidade da LCI/LCA</h3>
                         <div className='div-input'>
-                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <input type="number" value={rentabilidadeLciLca} onChange={(evento)=>{setRentabilidadeLciLca(evento.target.valueAsNumber)}} />
                             <span>%</span>
                         </div>
                     </div>
@@ -84,12 +88,12 @@ export default function Calculadora() {
                         </div>
                         <h3>Rentabilidade do CDB</h3>
                         <div className='div-input'>
-                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <input type="number" value={rentabilidadeCdb} onChange={(evento)=>{setRentabilidadeCdb(evento.target.valueAsNumber)}} />
                             <span>%</span>
                         </div>
                         <h3>Rentabilidade do Fundo DI</h3>
                         <div className='div-input'>
-                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <input type="number" value={rentabilidadeFundoDi} onChange={(evento)=>{setRentabilidadeFundoDi(evento.target.valueAsNumber)}} />
                             <span>%</span>
                         </div>
                         <div className='div-botao'>
