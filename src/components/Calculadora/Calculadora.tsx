@@ -81,7 +81,19 @@ export default function Calculadora() {
         buscarTaxas();
     }, []);
 
-    
+    function calculaCdb() {
+
+        const taxaReal = cdi.current * (rentabilidadeCdb / 100);
+
+        const total = calcularTotal(taxaReal, 0.1);
+
+        setCdb({
+            valorInvestido: total.totalAportado,
+            valorTotalSemImposto: total.semImposto,
+            valorTotalPosImposto: total.comImposto
+          });
+
+    }
     
 
     return (
