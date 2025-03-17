@@ -120,6 +120,19 @@ export default function Calculadora() {
           });
     }
 
+    function calculaTesouroIpca() {
+
+        const taxaReal = ipca.current + juroRealIpca;
+
+        const total = calcularTotal(taxaReal, 0.1);
+
+        setTesouroIpca({
+            valorInvestido: total.totalAportado,
+            valorTotalSemImposto: total.semImposto,
+            valorTotalPosImposto: total.comImposto
+          });
+    }
+
     return (
         <div className='pagina'>
             <div className='calculadora'>
