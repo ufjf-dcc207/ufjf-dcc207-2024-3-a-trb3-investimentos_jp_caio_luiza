@@ -91,7 +91,7 @@ export default function Calculadora() {
             valorInvestido: total.totalAportado,
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
-          });
+        });
     }
 
     function calculaTesouroSelic() {
@@ -104,7 +104,7 @@ export default function Calculadora() {
             valorInvestido: total.totalAportado,
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
-          });
+        });
     }
     
     function calculaLciLca() {
@@ -117,7 +117,7 @@ export default function Calculadora() {
             valorInvestido: total.totalAportado,
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
-          });
+        });
     }
 
     function calculaTesouroIpca() {
@@ -130,7 +130,7 @@ export default function Calculadora() {
             valorInvestido: total.totalAportado,
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
-          });
+        });
     }
 
     function calculaFundoDI() {
@@ -143,7 +143,7 @@ export default function Calculadora() {
             valorInvestido: total.totalAportado,
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
-          });
+        });
     }
 
     function calculoInvestimentos() {
@@ -220,10 +220,6 @@ export default function Calculadora() {
                         </div>
                     </div>
                 </div>
-                {/*<div className='resultado'>
-                    <h3 className='valor-final'>Valor Final</h3>
-                    <span>R${valorTotalPosImposto.toFixed(2)}</span>
-                </div> */}
             </div>
             <Resumo 
                 investimentos={[

@@ -12,7 +12,7 @@ interface ResumoProps {
 }
 
 export default function Resumo({ investimentos = [] }: ResumoProps) {
-    const tiposInvestimento = ["CDB", "Tesouro Selic", "LCI e LCA", "Fundo DI"];
+    const tiposInvestimento = ["CDB", "Tesouro Selic", "LCI e LCA", "Fundo DI", "Tesouro IPCA"];
 
     return (
         <div className="resumo">
