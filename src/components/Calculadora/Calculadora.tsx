@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
 import { getSelic } from '../../services/getSelic';
@@ -20,41 +20,44 @@ export default function Calculadora() {
     const [rentabilidadeTesouroSelic, setRentabilidadeTesouroSelic] = useState(0);
     const [rentabilidadeLciLca, setRentabilidadeLciLca] = useState(0);
     const [juroRealIpca, setJuroRealIpca] = useState(0);
-    const [valorInvestido, setValorInvestido] = useState(0);
-    const [valorTotalSemImposto, setValorTotalSemImposto] = useState(0);
-    const [valorTotalPosImposto, setValorTotalPosImposto] = useState(0);
 
-    const imposto = 0.1;
+    // Estados para armazenar os valores calculados
+    const [cdb, setCdb] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
+    const [tesouroSelic, setTesouroSelic] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
+    const [lciLca, setLciLca] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
+    const [fundoDi, setFundoDi] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
+    const [tesouroIpca, setTesouroIpca] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
+
     
-    function calcularTotal() {
+    function calcularTotal(taxa: number, imposto: number) {
 
         // i = taxa de juros mensal
-        // const i = Math.pow( 1 + (rendimentoAnual / 100.00), 1/12) - 1;
+        const i = Math.pow( 1 + taxa, 1/12) - 1;
 
         // facilita organizacao formula
-        // const t = periodoMeses;
+        const t = periodoMeses;
 
         // calcula o montante do dinheiro no fim do período sem imposto
-        // const totalSemImposto = (investimentoInicial * Math.pow(1 + i, t)) + investimentoMensal * ((Math.pow(1 + i, t) - 1) / i );
+        const totalSemImposto = (investimentoInicial * Math.pow(1 + i, t)) + investimentoMensal * ((Math.pow(1 + i, t) - 1) / i );
 
         // soma o valor do aporte inicial com o valor aportado mensalmente
-        // const valorAportado = (investimentoInicial + (investimentoMensal * t));
+        const valorAportado = (investimentoInicial + (investimentoMensal * t));
 
         // calcula quanto de fato a aplicação rendeu
-        // const rendimento = totalSemImposto - valorAportado;
+        const rendimento = totalSemImposto - valorAportado;
 
         // calcula o total do dinheiro com impostos descontados
-        // const totalComImposto = totalSemImposto - (rendimento * imposto);
+        const totalComImposto = totalSemImposto - (rendimento * imposto);
 
-        // setValorTotalSemImposto(totalSemImposto);
-        
-        // setValorTotalPosImposto(totalComImposto);
+        return {
+            semImposto: totalSemImposto,
+            comImposto: totalComImposto,
+            totalAportado: valorAportado
+        };
 
-        // setValorInvestido(valorAportado);
-
-        getCdi("13/03/2025");
-        getSelic("18/03/2025");
-        getIpca("18/03/2025");
+        // getCdi("13/03/2025");
+        // getSelic("18/03/2025");
+        // getIpca("18/03/2025");
     }
 
     function getDataAtualFormatada() {
@@ -77,6 +80,8 @@ export default function Calculadora() {
 
         buscarTaxas();
     }, []);
+
+    
     
 
     return (
