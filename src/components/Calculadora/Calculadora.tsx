@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useReducer } from 'react'
 import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
 import { getSelic } from '../../services/getSelic';
@@ -6,7 +6,43 @@ import { getCdi } from '../../services/getCdi';
 import { getIpca } from '../../services/getIpca';
 
 
+export type Investimento = {
+    tipo: string;
+    valorInvestido: number;
+    valorTotalSemImposto: number;
+    valorTotalPosImposto: number;
+};
+
+type Estado = {
+    cdb: Investimento;
+    tesouroSelic: Investimento;
+    lciLca: Investimento;
+    fundoDi: Investimento;
+    tesouroIpca: Investimento;
+};
+
+const initialState: Estado = {
+    cdb: { tipo: "CDB", valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 },
+    tesouroSelic: { tipo: "cdb", valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 },
+    lciLca: { tipo: "cdb", valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 },
+    fundoDi: { tipo: "cdb", valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 },
+    tesouroIpca: { tipo: "cdb", valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 },
+};
+
+type Acao =
+    | { type: 'SET_INVESTIMENTO'; investimento: keyof Pick<Estado, 'cdb' | 'tesouroSelic' | 'lciLca' | 'fundoDi' | 'tesouroIpca'>; payload: Investimento }
+
+function reducer(state: Estado, action: Acao): Estado {
+        switch (action.type) {
+            case 'SET_INVESTIMENTO':
+                return { ...state, [action.investimento]: action.payload };
+            default:
+                return state;
+        }
+    }
+
 export default function Calculadora() {
+    const [estado, dispatch] = useReducer(reducer, initialState);
 
     const selic = useRef(0);
     const cdi = useRef(0);
@@ -17,17 +53,8 @@ export default function Calculadora() {
     const [periodoMeses, setPeriodoAnos] = useState(0);
     const [rentabilidadeCdb, setRentabilidadeCdb] = useState(0);
     const [rentabilidadeFundoDi, setRentabilidadeFundoDi] = useState(0);
-    // const [rentabilidadeTesouroSelic, setRentabilidadeTesouroSelic] = useState(0);
     const [rentabilidadeLciLca, setRentabilidadeLciLca] = useState(0);
     const [juroRealIpca, setJuroRealIpca] = useState(0);
-
-    // Estados para armazenar os valores calculados
-    const [cdb, setCdb] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
-    const [tesouroSelic, setTesouroSelic] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
-    const [lciLca, setLciLca] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
-    const [fundoDi, setFundoDi] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
-    const [tesouroIpca, setTesouroIpca] = useState({ valorInvestido: 0, valorTotalSemImposto: 0, valorTotalPosImposto: 0 });
-
     
     function calcularTotal(taxa: number, imposto: number) {
 
@@ -54,10 +81,6 @@ export default function Calculadora() {
             comImposto: totalComImposto,
             totalAportado: valorAportado
         };
-
-        // getCdi("13/03/2025");
-        // getSelic("18/03/2025");
-        // getIpca("18/03/2025");
     }
 
     function getDataAtualFormatada() {
@@ -81,85 +104,36 @@ export default function Calculadora() {
         buscarTaxas();
     }, []);
 
-    function calculaCdb() {
+    function calculaInvestimento(tipo: keyof Estado, taxaReal: number, imposto: number) {
+        const total = calcularTotal(taxaReal, imposto);
 
-        const taxaReal = cdi.current * (rentabilidadeCdb / 100);
-
-        const total = calcularTotal(taxaReal, 0.1);
-
-        setCdb({
-            valorInvestido: total.totalAportado,
-            valorTotalSemImposto: total.semImposto,
-            valorTotalPosImposto: total.comImposto
-          });
-    }
-
-    function calculaTesouroSelic() {
-
-        const taxaReal = selic.current;
-
-        const total = calcularTotal(taxaReal, 0.1);
-
-        setTesouroSelic({
-            valorInvestido: total.totalAportado,
-            valorTotalSemImposto: total.semImposto,
-            valorTotalPosImposto: total.comImposto
-          });
-    }
-    
-    function calculaLciLca() {
-
-        const taxaReal = cdi.current * (rentabilidadeLciLca / 100);
-
-        const total = calcularTotal(taxaReal, 0);
-
-        setLciLca({
-            valorInvestido: total.totalAportado,
-            valorTotalSemImposto: total.semImposto,
-            valorTotalPosImposto: total.comImposto
-          });
-    }
-
-    function calculaTesouroIpca() {
-
-        const taxaReal = ipca.current + juroRealIpca;
-
-        const total = calcularTotal(taxaReal, 0.1);
-
-        setTesouroIpca({
-            valorInvestido: total.totalAportado,
-            valorTotalSemImposto: total.semImposto,
-            valorTotalPosImposto: total.comImposto
-          });
-    }
-
-    function calculaFundoDI() {
-
-        const taxaReal = cdi.current * (rentabilidadeFundoDi / 100);
-
-        const total = calcularTotal(taxaReal, 0.1);
-
-        setFundoDi({
-            valorInvestido: total.totalAportado,
-            valorTotalSemImposto: total.semImposto,
-            valorTotalPosImposto: total.comImposto
-          });
+        dispatch({
+            type: 'SET_INVESTIMENTO',
+            investimento: tipo,
+            payload: {
+                tipo,
+                valorInvestido: total.totalAportado,
+                valorTotalSemImposto: total.semImposto,
+                valorTotalPosImposto: total.comImposto
+            }
+        });
     }
 
     function calculoInvestimentos() {
-        calculaCdb();
-        calculaTesouroSelic();
-        calculaLciLca();
-        calculaFundoDI();
-        calculaTesouroIpca();
-
-        //teste
-        const investimentos =[
-            { tipo: "CDB", valorInvestido: cdb.valorInvestido, valorTotal: cdb.valorTotalSemImposto, valorImposto: cdb.valorTotalSemImposto - cdb.valorTotalPosImposto },
-            { tipo: "Tesouro Selic", valorInvestido: tesouroSelic.valorInvestido, valorTotal: tesouroSelic.valorTotalSemImposto, valorImposto: tesouroSelic.valorTotalSemImposto - tesouroSelic.valorTotalPosImposto },
-            { tipo: "LCI/LCA", valorInvestido: lciLca.valorInvestido, valorTotal: lciLca.valorTotalSemImposto, valorImposto: lciLca.valorTotalSemImposto - lciLca.valorTotalPosImposto },
-            { tipo: "Fundo DI", valorInvestido: fundoDi.valorInvestido, valorTotal: fundoDi.valorTotalSemImposto, valorImposto: fundoDi.valorTotalSemImposto - fundoDi.valorTotalPosImposto },
-            { tipo: "Tesouro IPCA", valorInvestido: tesouroIpca.valorInvestido, valorTotal: tesouroIpca.valorTotalSemImposto, valorImposto: tesouroIpca.valorTotalSemImposto - tesouroIpca.valorTotalPosImposto }
+        calculaInvestimento('cdb', cdi.current * (rentabilidadeCdb / 100), 0.1);
+        calculaInvestimento('tesouroSelic', selic.current, 0.1);
+        calculaInvestimento('lciLca', cdi.current * (rentabilidadeLciLca / 100), 0);
+        calculaInvestimento('fundoDi', cdi.current * (rentabilidadeFundoDi / 100), 0.1);
+        calculaInvestimento('tesouroIpca', ipca.current + juroRealIpca, 0.1);
+    }
+    
+    //testes
+        const investimentos = [
+            { tipo: "CDB", valorInvestido: estado.cdb.valorInvestido, valorTotal: estado.cdb.valorTotalSemImposto, valorImposto: estado.cdb.valorTotalSemImposto - estado.cdb.valorTotalPosImposto },
+            { tipo: "Tesouro Selic", valorInvestido: estado.tesouroSelic.valorInvestido, valorTotal: estado.tesouroSelic.valorTotalSemImposto, valorImposto: estado.tesouroSelic.valorTotalSemImposto - estado.tesouroSelic.valorTotalPosImposto },
+            { tipo: "LCI/LCA", valorInvestido: estado.lciLca.valorInvestido, valorTotal: estado.lciLca.valorTotalSemImposto, valorImposto: estado.lciLca.valorTotalSemImposto - estado.lciLca.valorTotalPosImposto },
+            { tipo: "Fundo DI", valorInvestido: estado.fundoDi.valorInvestido, valorTotal: estado.fundoDi.valorTotalSemImposto, valorImposto: estado.fundoDi.valorTotalSemImposto - estado.fundoDi.valorTotalPosImposto },
+            { tipo: "Tesouro IPCA", valorInvestido: estado.tesouroIpca.valorInvestido, valorTotal: estado.tesouroIpca.valorTotalSemImposto, valorImposto: estado.tesouroIpca.valorTotalSemImposto - estado.tesouroIpca.valorTotalPosImposto }
         ];
         console.log("Detalhes dos Investimentos:");
         investimentos.forEach((investimento, index) => {
@@ -169,9 +143,7 @@ export default function Calculadora() {
         console.log(`Valor Total: ${investimento.valorTotal}`);
         console.log(`Valor Imposto: ${investimento.valorImposto}`);
         console.log("----------------------");
-});
-
-    }
+    });
 
     return (
         <div className='pagina'>
@@ -220,18 +192,14 @@ export default function Calculadora() {
                         </div>
                     </div>
                 </div>
-                {/*<div className='resultado'>
-                    <h3 className='valor-final'>Valor Final</h3>
-                    <span>R${valorTotalPosImposto.toFixed(2)}</span>
-                </div> */}
             </div>
             <Resumo 
                 investimentos={[
-                    { tipo: "CDB", valorInvestido: cdb.valorInvestido, valorTotal: cdb.valorTotalSemImposto, valorImposto: cdb.valorTotalSemImposto - cdb.valorTotalPosImposto },
-                    { tipo: "Tesouro Selic", valorInvestido: tesouroSelic.valorInvestido, valorTotal: tesouroSelic.valorTotalSemImposto, valorImposto: tesouroSelic.valorTotalSemImposto - tesouroSelic.valorTotalPosImposto },
-                    { tipo: "LCI/LCA", valorInvestido: lciLca.valorInvestido, valorTotal: lciLca.valorTotalSemImposto, valorImposto: lciLca.valorTotalSemImposto - lciLca.valorTotalPosImposto },
-                    { tipo: "Fundo DI", valorInvestido: fundoDi.valorInvestido, valorTotal: fundoDi.valorTotalSemImposto, valorImposto: fundoDi.valorTotalSemImposto - fundoDi.valorTotalPosImposto },
-                    { tipo: "Tesouro IPCA", valorInvestido: tesouroIpca.valorInvestido, valorTotal: tesouroIpca.valorTotalSemImposto, valorImposto: tesouroIpca.valorTotalSemImposto - tesouroIpca.valorTotalPosImposto }
+                    { tipo: "CDB", valorInvestido: estado.cdb.valorInvestido, valorTotalSemImposto: estado.cdb.valorTotalSemImposto, valorTotalPosImposto: estado.cdb.valorTotalPosImposto },
+                    { tipo: "Tesouro Selic", valorInvestido: estado.tesouroSelic.valorInvestido, valorTotalSemImposto: estado.tesouroSelic.valorTotalSemImposto, valorTotalPosImposto: estado.tesouroSelic.valorTotalPosImposto },
+                    { tipo: "LCI/LCA", valorInvestido: estado.lciLca.valorInvestido, valorTotalSemImposto: estado.lciLca.valorTotalSemImposto, valorTotalPosImposto: estado.lciLca.valorTotalPosImposto },
+                    { tipo: "Fundo DI", valorInvestido: estado.fundoDi.valorInvestido, valorTotalSemImposto: estado.fundoDi.valorTotalSemImposto, valorTotalPosImposto: estado.fundoDi.valorTotalPosImposto },
+                    { tipo: "Tesouro IPCA", valorInvestido: estado.tesouroIpca.valorInvestido, valorTotalSemImposto: estado.tesouroIpca.valorTotalSemImposto, valorTotalPosImposto: estado.tesouroIpca.valorTotalPosImposto }
                 ]}
             />
         </div>
