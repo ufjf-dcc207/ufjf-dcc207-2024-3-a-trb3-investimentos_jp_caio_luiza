@@ -17,7 +17,7 @@ export default function Calculadora() {
     const [periodoMeses, setPeriodoAnos] = useState(0);
     const [rentabilidadeCdb, setRentabilidadeCdb] = useState(0);
     const [rentabilidadeFundoDi, setRentabilidadeFundoDi] = useState(0);
-    const [rentabilidadeTesouroSelic, setRentabilidadeTesouroSelic] = useState(0);
+    // const [rentabilidadeTesouroSelic, setRentabilidadeTesouroSelic] = useState(0);
     const [rentabilidadeLciLca, setRentabilidadeLciLca] = useState(0);
     const [juroRealIpca, setJuroRealIpca] = useState(0);
 
@@ -146,6 +146,14 @@ export default function Calculadora() {
           });
     }
 
+    function calculoInvestimentos() {
+        calculaCdb();
+        calculaTesouroSelic();
+        calculaLciLca();
+        calculaFundoDI();
+        calculaTesouroIpca();
+    }
+
     return (
         <div className='pagina'>
             <div className='calculadora'>
@@ -189,14 +197,14 @@ export default function Calculadora() {
                             <span>%</span>
                         </div>
                         <div className='div-botao'>
-                            <button onClick={calcularTotal} className='botao' >Calcular</button>
+                            <button onClick={calculoInvestimentos} className='botao' >Calcular</button>
                         </div>
                     </div>
                 </div>
-                <div className='resultado'>
+                {/*<div className='resultado'>
                     <h3 className='valor-final'>Valor Final</h3>
                     <span>R${valorTotalPosImposto.toFixed(2)}</span>
-                </div>
+                </div> */}
             </div>
             <Resumo valorInvestido={valorInvestido} valorTotal={valorTotalSemImposto} valorImposto={imposto}/>
         </div>
