@@ -92,7 +92,19 @@ export default function Calculadora() {
             valorTotalSemImposto: total.semImposto,
             valorTotalPosImposto: total.comImposto
           });
+    }
 
+    function calculaTesouroSelic() {
+
+        const taxaReal = selic.current;
+
+        const total = calcularTotal(taxaReal, 0.1);
+
+        setTesouroSelic({
+            valorInvestido: total.totalAportado,
+            valorTotalSemImposto: total.semImposto,
+            valorTotalPosImposto: total.comImposto
+          });
     }
     
 
