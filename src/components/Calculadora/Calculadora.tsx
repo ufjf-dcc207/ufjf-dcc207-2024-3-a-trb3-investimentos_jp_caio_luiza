@@ -135,7 +135,7 @@ export default function Calculadora() {
 
     function calculaFundoDI() {
 
-        const taxaReal = ipca.current * (rentabilidadeFundoDi / 100);
+        const taxaReal = cdi.current * (rentabilidadeFundoDi / 100);
 
         const total = calcularTotal(taxaReal, 0.1);
 
