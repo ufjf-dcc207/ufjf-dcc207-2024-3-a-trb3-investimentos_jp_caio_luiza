@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './Calculadora.css'
 import Resumo from '../Resumo_investimentos/Resumo';
 import { getSelic } from '../../services/getSelic';
+import { getCdi } from '../../services/getCdi';
 
 
 export default function Calculadora() {
@@ -42,7 +43,7 @@ export default function Calculadora() {
 
         setValorInvestido(valorAportado);
 
-        getSelic("15/03/2025");
+        getCdi("13/03/2025");
     }
 
 
