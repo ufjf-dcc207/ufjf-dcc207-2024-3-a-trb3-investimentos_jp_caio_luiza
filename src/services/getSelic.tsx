@@ -16,10 +16,16 @@ export async function getSelic(dataFinal: string) {
 
         const data = await response.json();
 
-        const resultado = data.find((item: { data: string; valor: string}) => item.data === dataFinal);
+        if (data.length === 0) {
+            return null;
+        }
 
-        if (resultado) {
-            return resultado.valor;
+        const ultimoValor = data[data.length - 1].valor;
+
+        console.log(ultimoValor);
+
+        if (ultimoValor) {
+            return ultimoValor;
         }
         
         return null;
