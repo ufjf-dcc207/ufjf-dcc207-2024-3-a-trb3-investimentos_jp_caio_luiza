@@ -32,7 +32,7 @@ export default function Calculadora() {
     function calcularTotal(taxa: number, imposto: number) {
 
         // i = taxa de juros mensal
-        const i = Math.pow( 1 + taxa, 1/12) - 1;
+        const i = Math.pow( 1 + (taxa / 100), 1/12) - 1;
 
         // facilita organizacao formula
         const t = periodoMeses;
