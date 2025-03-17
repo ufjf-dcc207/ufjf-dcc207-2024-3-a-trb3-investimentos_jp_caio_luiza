@@ -206,7 +206,15 @@ export default function Calculadora() {
                     <span>R${valorTotalPosImposto.toFixed(2)}</span>
                 </div> */}
             </div>
-            <Resumo valorInvestido={valorInvestido} valorTotal={valorTotalSemImposto} valorImposto={imposto}/>
+            <Resumo 
+                investimentos={[
+                    { tipo: "CDB", valorInvestido: cdb.valorInvestido, valorTotal: cdb.valorTotalSemImposto, valorImposto: cdb.valorTotalSemImposto - cdb.valorTotalPosImposto },
+                    { tipo: "Tesouro Selic", valorInvestido: tesouroSelic.valorInvestido, valorTotal: tesouroSelic.valorTotalSemImposto, valorImposto: tesouroSelic.valorTotalSemImposto - tesouroSelic.valorTotalPosImposto },
+                    { tipo: "LCI/LCA", valorInvestido: lciLca.valorInvestido, valorTotal: lciLca.valorTotalSemImposto, valorImposto: lciLca.valorTotalSemImposto - lciLca.valorTotalPosImposto },
+                    { tipo: "Fundo DI", valorInvestido: fundoDi.valorInvestido, valorTotal: fundoDi.valorTotalSemImposto, valorImposto: fundoDi.valorTotalSemImposto - fundoDi.valorTotalPosImposto },
+                    { tipo: "Tesouro IPCA", valorInvestido: tesouroIpca.valorInvestido, valorTotal: tesouroIpca.valorTotalSemImposto, valorImposto: tesouroIpca.valorTotalSemImposto - tesouroIpca.valorTotalPosImposto }
+                ]}
+            />
         </div>
     )
 }
