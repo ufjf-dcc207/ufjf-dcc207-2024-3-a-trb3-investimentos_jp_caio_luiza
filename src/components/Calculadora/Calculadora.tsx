@@ -109,7 +109,7 @@ export default function Calculadora() {
     
     function calculaLciLca() {
 
-        const taxaReal = cdi.current * (rentabilidadeCdb / 100);
+        const taxaReal = cdi.current * (rentabilidadeLciLca / 100);
 
         const total = calcularTotal(taxaReal, 0);
 
