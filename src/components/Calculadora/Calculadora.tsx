@@ -65,6 +65,16 @@ export default function Calculadora() {
                         <div className='div-input'>
                             <input type="number" value={periodoMeses} onChange={(evento)=>{setPeriodoAnos(evento.target.valueAsNumber)}} />
                         </div>
+                        <h3>Juro real do Tesouro IPCA</h3>
+                        <div className='div-input'>
+                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <span>%</span>
+                        </div>
+                        <h3>Rentabilidade da LCI/LCA</h3>
+                        <div className='div-input'>
+                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <span>%</span>
+                        </div>
                     </div>
                     <div className='linha2'>
                     <h3>Investimento Mensal</h3>
@@ -72,15 +82,20 @@ export default function Calculadora() {
                             <span>R$</span>
                             <input type="number" value={investimentoMensal} onChange={(evento)=>{setInvestimentoMensal(evento.target.valueAsNumber)}} />
                         </div>
-                        <h3>Rendimento anual</h3>
+                        <h3>Rentabilidade do CDB</h3>
                         <div className='div-input'>
                             <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
                             <span>%</span>
                         </div>
+                        <h3>Rentabilidade do Fundo DI</h3>
+                        <div className='div-input'>
+                            <input type="number" value={rendimentoAnual} onChange={(evento)=>{setRendimentoAnual(evento.target.valueAsNumber)}} />
+                            <span>%</span>
+                        </div>
+                        <div className='div-botao'>
+                            <button onClick={calcularTotal} className='botao' >Calcular</button>
+                        </div>
                     </div>
-                </div>
-                <div className='div-botao'>
-                    <button onClick={calcularTotal} className='botao' >Calcular</button>
                 </div>
                 <div className='resultado'>
                     <h3 className='valor-final'>Valor Final</h3>

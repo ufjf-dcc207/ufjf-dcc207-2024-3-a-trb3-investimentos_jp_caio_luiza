@@ -71,7 +71,7 @@ input {
     display: flex;
     max-width: 700px;
     width: 100%;
-    justify-content: end;
+    justify-content: center;
 }
 
 .botao {
